@@ -1,0 +1,33 @@
+//1 . Importar las dependencias
+
+const express = require('express');
+const cors    = require('cors');
+
+//2 . crear la aplicacion y definir el puerto
+
+const app = express();
+const PORT = 3000;
+
+//3 . Activar middleawares
+
+app.use(cors());
+app.use(express.json());
+
+//4 . ruta GET /api/productos
+
+app.get('/api/productos', (req, res) => {
+    const productos = require('../frontend/data/productos.json');
+    res.json(productos);
+});
+
+//5 . ruta de prueba
+
+app.get('/', (req, res) => {
+    res.json({ mensaje: 'Servidor TechStore Pro'});
+});
+
+//6 . Arrancar el servidor 
+
+app.listen(PORT, ()  => {
+    console.log(`Servidor en https://localhost:${PORT}`);
+});
