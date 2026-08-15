@@ -1,29 +1,41 @@
 //1 . Importar las dependencias
 
-const express = require('express');
-const cors    = require('cors');
+require('dotenv').config();
+const express  = require('express');
+const cors     = require('cors');
+const mongoose = require('mongoose');
+const Producto = require('./models/Producto');
 
 //2 . crear la aplicacion y definir el puerto
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 //3 . Activar middleawares
 
 app.use(cors());
 app.use(express.json());
 
-//4 . ruta GET /api/productos
+//4. Conectar a MongoDB atlas NUEVO..
 
-app.get('/api/productos', (req, res) => {
-    const productos = require('../frontend/data/productos.json');
-    res.json(productos);
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('✅ Conectado a MongoDB Atlas'))
+    .catch((err) => console.error('❌ Error de conexión:', err))
+
+//5. Ruta GET /api/productos - ahora lee de MongoDB Atlas
+app.get('/api/productos', async (req, res) => {
+    try {
+        const productos = await Producto.find(); // Trae todos los docs de Atlas
+        res.json(productos);
+    } catch (err) {
+      res.status(500).json({ error: 'Error al obtener productos'});
+    }
 });
 
-//5 . ruta de prueba
+//6 . ruta de prueba
 
 app.get('/', (req, res) => {
-    res.json({ mensaje: 'Servidor TechStore Pro'});
+    res.json({ mensaje: 'Servidor TechStore Pro ✅'});
 });
 
 //6 . Arrancar el servidor 
