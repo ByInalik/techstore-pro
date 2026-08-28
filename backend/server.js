@@ -1,12 +1,14 @@
 //1 . Importar las dependencias
 
 require('dotenv').config();
-const express           = require('express');
-const cors              = require('cors');
-const mongoose          = require('mongoose');
-const Producto          = require('./models/Producto');
-const authRoutes        = require('./routes/auth');
-const verificarToken    = require('./middleware/auth');
+const express            = require('express');
+const cors               = require('cors');
+const mongoose           = require('mongoose');
+const Producto           = require('./models/Producto');
+const authRoutes         = require('./routes/auth');
+const verificarToken     = require('./middleware/auth');
+const productosRoutes    = require('./routes/productos'); 
+const ordenesRoutes      = require('./routes/ordenes');
 
 //2 . crear la aplicacion y definir el puerto
 
@@ -24,51 +26,6 @@ mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('✅ Conectado a MongoDB Atlas'))
     .catch((err) => console.error('❌ Error de conexión:', err))
 
-//5. Ruta GET /api/productos - ahora lee de MongoDB Atlas
-app.get('/api/productos', async (req, res) => {
-    try {
-        const productos = await Producto.find(); // Trae todos los docs de Atlas
-        res.json(productos);
-    } catch (err) {
-      res.status(500).json({ error: 'Error al obtener productos'});
-    }
-});
-
-//6. Ruta POST /api/productos - crear un productos nuevo < - AGREGA aqui
-app.post('/api/productos', verificarToken, async (req, res) => {
-    try {
-        const nuevoProducto = await Producto.create(req.body); // toma el JSON del body
-        res.status(201).json(nuevoProducto);                   // 201 = created
-    } catch (err) {
-      res.status(400).json({ error: err.message });            // 400 = datos invalidos
-    }
-});
-
-//7. Ruta PUT /api/productos/:id - actualizar un producto
-app.put('/api/productos/:id', verificarToken, async (req, res) => {
-    try {
-        const actualizado = await Producto.findByIdAndUpdate(
-            req.params.id, // _id de MongoDB que viene en la URL
-            req.body,      // campos nuevos que viene en el body
-            { new: true }  // retorno el documento YA actualizado
-        );
-        if (!actualizado) return res.status(404).json({ error: 'Producto no encontrado' });
-        res.json(actualizado);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
-});
-
-//8. Ruta DELETE /api/productos/:id - eliminar un producto
-app.delete('/api/productos/:id', verificarToken, async (req, res) => {
-    try {
-        const eliminado = await Producto.findByIdAndDelete(req.params.id);
-        if (!eliminado) return res.status(404).json({ error: 'Producto no encontrado'});
-        res.json({ mensaje: 'Producto eliminado correctamente', eliminado});
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
-});
 
 //9 . ruta de prueba
 
@@ -84,3 +41,9 @@ app.listen(PORT, ()  => {
 
 //11. Rutas de autenticacion <- NUEVO S14
 app.use('/api/auth', authRoutes);
+
+// 12. Rutas de productos <- sin cambios
+app.use('/api/productos', productosRoutes);
+
+// 13. Rutas de ordenes <- 
+app.use('/api/ordenes', ordenesRoutes);
