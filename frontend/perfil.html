@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil | TechStore Pro</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <div class="barra-scroll" id="barra-scroll"></div>
+
+    <header class="header">
+        <div class="header-logo">
+            <span class="logo-icon">⚡</span>
+            <span class="logo-text">TechStore Pro</span>
+        </div>
+
+        <button id="menu-toggle" class="menu-toggle"
+                aria-label="Abrir menú" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav id="menu" class="menu">
+            <a href="index.html">Inicio</a>
+            <a href="productos.html">Productos</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="contacto.html">Contacto</a>
+            <a href="registro.html">Registro</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="login.html" id="nav-login" class="btn-login-header">
+                Login
+            </a>
+            <button id="btn-carrito" class="btn-carrito"
+                    aria-label="Carrito (0)"> 🛒</button>
+            <div class="carrito-badge-container">
+                <span class="carrito-badge" id="carrito-badge">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="perfil-contenedor">
+            <!-- Estado: cargando -->
+            <div id="estado-cargando" class="perfil-cargando">
+                <span>Cargando perfil...</span>
+            </div>
+            <!-- Estado: sin sesión -->
+            <div id="estado-sin-sesion" class="perfil-sin-sesion"
+                 style="display:none;">
+                <p>Debes iniciar sesión para ver tu perfil.</p>
+                <a href="login.html" class="btn btn-primary">
+                    Iniciar sesión
+                </a>
+            </div>
+
+            <!-- Estado: error -->
+            <div id="estado-error" class="perfil-error"
+                 style="display:none;">
+                <p>❌ No se pudo cargar el perfil.</p>
+            </div>
+
+            <!-- Datos del perfil: ocultos hasta que el perfil ya esté listo -->
+            <div id="perfil-datos" class="perfil-datos"
+                 style="display:none;">
+                <div class="perfil-avatar">
+                    <div class="perfil-foto">
+                        <div class="perfil-info">
+                            <h1 class="perfil-nombre" id="perfil-nombre"></h1>
+                            <span class="perfil-rol" id="perfil-rol"></span>
+                        </div>
+                        <div class="perfil-campo">
+                            <span>Email:</span>
+                            <span id="perfil-email"></span>
+                        </div>
+                        <div class="perfil-campo">
+                            <span>Teléfono:</span>
+                            <span id="perfil-telefono"></span>
+                        </div>
+                        <div class="perfil-campo">
+                            <span>Dirección:</span>
+                            <span id="perfil-direccion"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-contenido">
+
+            <div class="footer-marca">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">TechStore Pro</span>
+                <p>Tu tienda de tecnología en línea.</p>
+            </div>
+
+            <nav class="footer-nav">
+                <a href="index.html">Inicio</a>
+                <a href="productos.html">Productos</a>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="contacto.html">Contacto</a>
+                <a href="registro.html">Registro</a>
+            </nav>
+
+            <div class="footer-contacto">
+                <p>📍 Ciudad, Departamento</p>
+                <p>📞 300 000 0000</p>
+                <p>✉️ info@techstorepro.com</p>
+            </div>
+
+            <div class="footer-copy">
+                <p>&copy; 2026 TechStore Pro - Todas las derechos reservados</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/perfil.js"></script>
+
+</body>
+</html>
