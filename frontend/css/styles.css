@@ -455,6 +455,7 @@ a:hover { color: var(--color-secundario); }
 
 .btn-accion:hover {
   background: var(--color-secundario);
+  color: #e9edfe;
   transform: translateY(-1px);
 }
 
@@ -1466,6 +1467,7 @@ body.tema-oscuro .valor {
   color: #111827;
 }
 
+
 /* Modo oscuro */
 body.tema-oscuro .pedido-card {
   background: #1f2937;
@@ -1503,6 +1505,8 @@ body.tema-oscuro .badge-estado.cancelado {
   background: #7f1d1d;
   color: #fca5a5;
 }
+
+
 
 /* 👤 DROPDOWN DE USUARIO EN EL HEADER
    Aparece al hacer clic en el nombre del usuario logueado
