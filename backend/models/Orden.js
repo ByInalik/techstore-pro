@@ -29,8 +29,12 @@ const ordenSchema = new Schema({
     estado: {
         type: String,
         default: 'pendiente',
-        enum: ['pendiente', 'procesando', 'enviado', 'entregado']
-    }
+        enum: ['pendiente', 'procesando', 'enviado', 'entregado', 'PAGO_CONFIRMADO'] //Valor Agregado
+    },
+
+    //Datos de Wompi - se llenan solo cuando el pago fue aprobado
+    wompiTransactionId: { type: String },
+    wompiReference:     { type: String },
 
     }, { timestamps: true}); //agrega createdAT y updatedAT
 
