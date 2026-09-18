@@ -42,12 +42,9 @@ app.listen(PORT, ()  => {
 
 //11. Rutas de autenticacion <- NUEVO S14
 app.use('/api/auth', authRoutes);
-
 // 12. Rutas de productos <- sin cambios
 app.use('/api/productos', productosRoutes);
-
 // 13. Rutas de ordenes <- 
 app.use('/api/ordenes', ordenesRoutes);
-
-app.use('/api/pagos', pagoRoutes);
 // El webhnook queda expuesto en /api/pagos/webhook dentro del mismo router
+app.use('/api/pagos', pagoRoutes);

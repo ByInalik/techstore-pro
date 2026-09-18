@@ -63,8 +63,6 @@ router.get('/estado/:reference', verificarToken, async (req, res) => {
     const tx = await Transaccion.findOne({ wompiReference: req.params.reference });
     if (!tx) return res.status(404).json({ error: 'Transacción no encontrada' });
 
-    // [PASO 3 — NUEVO] Sin webhook (no hay ngrok), preguntamos directamente a Wompi.
-    // ⚠️ Requiere la llave PRIVADA (WOMPI_PRIVATE_KEY), no la pública.
     if (tx.status === 'PENDING') {
       const wompiRes = await fetch(
         `https://sandbox.wompi.co/v1/transactions?reference=${tx.wompiReference}`,
@@ -77,6 +75,7 @@ router.get('/estado/:reference', verificarToken, async (req, res) => {
         const wompiJson = await wompiRes.json();
         const wompiTx = wompiJson.data?.[0];
 
+        // CORRECCIÓN AQUÍ: Usar !== 'PENDING' para procesar cuando ya NO esté pendiente
         if (wompiTx && wompiTx.status !== 'PENDING') {
           await confirmarAprobado(tx, wompiTx);
         }
