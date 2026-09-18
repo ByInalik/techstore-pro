@@ -18,7 +18,7 @@ router.post('/firma', verificarToken, async (req, res) => {
     const amountInCents = Math.round(total * 100);
     const currency = 'COP';
 
-    const raw = `${reference}${amountInCents}${currency}${process.env.WOMPI_INTEGRITY_SECRET}`;
+    const raw = `${reference}${amountInCents}${currency}${process.env.WOMPI_INTEGRITY_KEY}`;
     const signature = crypto.createHash('sha256').update(raw).digest('hex');
 
     await Transaccion.create({

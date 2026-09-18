@@ -35,11 +35,13 @@ async function cargarMisPedidos() {
   
         const estado = p.estado || 'pendiente';
   
-        const etiqueta = {
+        const estadoTexto = {
           pendiente: '⏳ Pendiente',
+          procesando:'⚙️ Procesando',
           enviado: '🚚 Enviado',
           entregado: '✅ Entregado',
-          cancelado: '❌ Cancelado'
+          cancelado: '❌ Cancelado',
+          PAGO_CONFIRMADO:'💳 Pago confirmado'
         }[estado] || estado;
   
         const items = (p.productos || []).map(function(i) {
@@ -47,13 +49,18 @@ async function cargarMisPedidos() {
         }).join('');
   
         const total = p.total ? '$' + Number(p.total).toLocaleString('es-CO') : '-';
+
+        // Línea de tiempo del pedido — solo se dibuja si el estado forma parte
+        // del flujo normal post-pago (ver js/timeline.js)
+        const timelineHTML = renderTimelineEstado(estado);
   
         return `<div class="pedido-card">
           <div class="pedido-encabezado">
-            <div><div class="pedido-id">ID: ${p._id}</div><div class="pedido-fecha">${fecha}</div></div>
-            <span class="badge-estado ${estado}">${etiqueta}</span>
+            <span><strong>Fecha: </strong>${fecha}</span>
+            <span class="badge-estado ${estadoTexto}">${estadoTexto}</span>
           </div>
           <ul class="pedido-productos">${items}</ul>
+          <div class="timeline-wrap">${timelineHTML}</div>
           <div class="pedido-total">Total: ${total}</div>
         </div>`;
       }).join('');

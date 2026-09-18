@@ -430,8 +430,9 @@ mostrarPaginaCarrito();
 // lee el token del localStorage y actualiza el nav en TODAS las paginas
 
 function actualizarNavSesion() {
-  const token = localStorage.getItem('token');
+  const token  = localStorage.getItem('token');
   const nombre = localStorage.getItem('usuario-nombre');
+  const rol    = localStorage.getItem('usuario-rol');
   const enlaceLogin = document.querySelector('#nav-login');
   if (!enlaceLogin) return;
 
@@ -456,6 +457,11 @@ function actualizarNavSesion() {
     linkPedidos.href = 'mispedidos.html';
     linkPedidos.textContent = '📦 Mis pedidos';
 
+    // Opción: Panel Admin — solo visible si el usuario tiene rol 'admin'
+    const linkAdmin = document.createElement('a');
+    linkAdmin.href        = 'admin.html';
+    linkAdmin.textContent = '🛠️ Panel Admin';
+
     const sep = document.createElement('div');
     sep.className = 'menu-separador';
 
@@ -466,11 +472,13 @@ function actualizarNavSesion() {
     btnCerrar.addEventListener('click', function() {
       localStorage.removeItem('token');
       localStorage.removeItem('usuario-nombre');
+      localStorage.removeItem('usuario-rol');  // ← AGREGAR
       window.location.href = 'login.html';
     });
 
     menu.appendChild(linkPerfil);
     menu.appendChild(linkPedidos);
+    if (rol === 'admin') menu.appendChild(linkAdmin);  // ← AGREGAR
     menu.appendChild(sep);
     menu.appendChild(btnCerrar);
 
