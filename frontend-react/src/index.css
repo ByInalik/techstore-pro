@@ -8,3 +8,10 @@
   --color-texto: #1a1a2e;
   --color-texto-dim: #64748b;
 }
+
+/* Fondo global del proyecto */
+body {
+  background-color: #f7f7f2; /* o el color que quieras */
+  color: #0f172a;
+  min-height: 100vh;
+}

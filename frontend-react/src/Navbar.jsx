@@ -1,6 +1,6 @@
 function Navbar() {
-    return (
-<nav className="flex item-center justify-between px-8 py-4 bg-white border-b border-slate-200">
+  return (
+    <nav className="sticky top-4 z-50 flex items-center justify-between px-8 py-4 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200 shadow-sm">
       <div className="text-xl font-extrabold text-verde">
         TechStore Pro
       </div>
@@ -14,7 +14,7 @@ function Navbar() {
         Ingresar
       </button>
     </nav>
-   ) 
+  );
 }
 
-export default Navbar
+export default Navbar;
