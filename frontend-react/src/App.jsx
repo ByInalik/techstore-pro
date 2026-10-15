@@ -1,45 +1,30 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Navbar from "./Navbar"
 import Footer from "./Footer"
 import ProductCard from "./ProductCard"
 import gridPattern from "./assets/grid-pattern.svg"
 
 
-const productos = [
-  {
-    nombre: "Mouse Inalambrico",
-    descripcion: "Mouse ergonomico, conexion Bluetooth",
-    precio: "$89.900",
-    imagen: "https://images.pexels.com/photos/7265962/pexels-photo-7265962.jpeg",
-  },
-  {
-    nombre: "Teclado Mecanico",
-    descripcion: "Switches azules, retroiluminado RGB",
-    precio: "$149.900",
-    imagen: "https://images.pexels.com/photos/19708913/pexels-photo-19708913.jpeg"
-  },
-  {
-    nombre: "Monitor 24",
-    descripcion: "Full HD, 75Hz, panel IPS",
-    precio: "$89.900",
-    imagen: "https://images.pexels.com/photos/11288109/pexels-photo-11288109.jpeg"
-  },
-  {
-    nombre: "Audifonos Bluetooth",
-    descripcion: "Cancelacion de ruido, 20H de bateria",
-    precio: "$199.900",
-    imagen: "https://images.pexels.com/photos/6889216/pexels-photo-6889216.jpeg"
-  },
-  {
-    nombre: "Silla Ergonomica",
-    descripcion: "Silla ergonómica y cómoda, ideal para oficina o estudio.",
-    precio: "$199.900",
-    imagen: "https://images.pexels.com/photos/11181042/pexels-photo-11181042.jpeg"
-  }
-]
 
 function App() {
   const [busqueda, setBusqueda] = useState("")
+  const [productos, setProductos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
+
+  function cargarProductos() {
+    setCargando(true);
+    setError(null);
+    fetch("http://localhost:3000/api/productos")
+      .then((res) => res.json())
+      .then((datos) => setProductos(datos))
+      .catch(() => setError("No se pudo conectar al servidor"))
+      .finally(() => setCargando(false));
+  }
+  
+  useEffect(() => {
+    cargarProductos();
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f7f7f2] text-texto relative">
@@ -65,24 +50,38 @@ function App() {
           onChange={(e) => setBusqueda(e.target.value)}
           className="w-full max-w-md px-4 py-2 border-2 border-slate-200 rounded-lg"
         />
-        <p className="text-sm text-texto-dim whitespace-nowrap">
-            {productos.filter((p) => p.nombre.toLowerCase().includes(busqueda.toLowerCase())).length} producto(s) encontrado(s)
+        <p className="text-sm font-medium text-texto-dim whitespace-nowrap">
+              {productos.filter((p) => p.nombre.toLowerCase().includes(busqueda.toLowerCase())).length} producto(s) encontrado(s)
         </p>
+         <p className="text-xs text-texto-dim">
+              ({productos.length} en total en la base de datos)
+         </p>
+          <button 
+          onClick={cargarProductos}
+          className="px-4 py-2 bg-verde text-white rounded-lg font-bold text-sm whitespace-nowrap">
+          Recargar
+          </button>
         </div>
+
+        {cargando && <p className="text-center py-10">Cargando productos...</p>}
+        {error && <p className="text-center text-red-600 py-10">{error}</p>}
+        {!cargando && !error && (
+
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {productos
             .filter((p) => p.nombre.toLowerCase().includes(busqueda.toLowerCase()))
             .map((p) => (
             <ProductCard
-              key={p.nombre}
+              key={p.id}
               nombre={p.nombre}
               descripcion={p.descripcion}
               precio={p.precio}
               imagen={p.imagen}
-              stock={p.stock}
+              icono={p.icono}
             />
           ))}
         </section>
+        )}
         {productos.filter((p) =>
             p.nombre.toLowerCase().includes(busqueda.toLowerCase())
           ).length === 0 && (
