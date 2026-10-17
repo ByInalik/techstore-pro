@@ -6,8 +6,8 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* ── Sección Superior: Título + Enlaces ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
-          
-          {/* Título en la misma tipografía Sans que el resto de la web */}
+
+          {/* Título */}
           <div className="lg:col-span-5">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-black">
               Mantente al día
@@ -62,7 +62,7 @@ function Footer() {
         </div>
 
         {/* ── Línea Inferior de Info / Copyright ── */}
-        <div className="flex items-center gap-6 text-xs text-gray-600 mb-6 font-medium">
+        <div className="flex flex-wrap items-center gap-6 text-xs text-gray-600 pb-6 font-medium">
           <div className="flex items-center gap-1.5 cursor-pointer hover:text-black">
             <span>🇨🇴 ES</span>
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,9 +73,12 @@ function Footer() {
         </div>
       </div>
 
-      {/* ── Nombre Gigante de la Marca en el fondo ── */}
+      {/* ── Nombre Gigante de la Marca ── */}
       <div className="w-full overflow-hidden leading-none select-none pointer-events-none">
-        <h1 className="text-[17vw] font-extrabold text-black tracking-tighter text-center uppercase leading-[0.75] translate-y-2">
+        <h1
+          className="font-extrabold text-black tracking-tighter text-center uppercase leading-[0.8] block w-full"
+          style={{ fontSize: "clamp(3rem, 15vw, 15rem)" }}
+        >
           TECHSTORE
         </h1>
       </div>
