@@ -3,19 +3,25 @@ import Navbar from "./Navbar";
 import Footer from "./Footer.jsx";
 import Home from "./Home.jsx";
 import Productos from "./Productos.jsx";
-import NotFound from './NotFound.jsx';
+import Nosotros from "./Nosotros.jsx";
+import Contacto from "./Contacto.jsx"
+import NotFound from "./NotFound.jsx";
 
 function App() {
   return (
-      <main className="min-h-screen max-w-6xl mx-auto px-6 py-10 flex flex-col justify-between gap-10">
-        <Navbar />
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-1 w-full max-w-6xl mx-auto px-6 py-10">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/productos" element={<Productos />} />
+          <Route path="/nosotros" element={<Nosotros />} />
+          <Route path="/contacto" element={<Contacto />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
       </main>
+      <Footer />
+    </div>
   );
 }
 

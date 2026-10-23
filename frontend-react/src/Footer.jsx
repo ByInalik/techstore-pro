@@ -1,86 +1,88 @@
+import { Link } from "react-router-dom";
+
+const menu = [
+  { ruta: "/", texto: "Inicio" },
+  { ruta: "/productos", texto: "Productos" },
+  { ruta: "/nosotros", texto: "Nosotros" },
+  { ruta: "/contacto", texto: "Contacto" },
+];
+
+const redes = ["Instagram", "Facebook", "WhatsApp"];
+
 function Footer() {
-  const year = new Date().getFullYear();
-
   return (
-    <footer className="mt-20 w-full bg-[#f7f7f2] text-black pt-16 pb-0 overflow-hidden font-sans">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* ── Sección Superior: Título + Enlaces ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
-
-          {/* Título */}
-          <div className="lg:col-span-5">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-black">
-              Mantente al día
-            </h2>
-            <p className="mt-3 text-sm text-gray-600 max-w-xs leading-relaxed">
-              Tecnología verificada, envíos rápidos y soporte real para tu día a día.
+    <footer className="bg-paper pt-24 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 text-ink">
+        {/* CONTACTO Y ENLACES */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="flex flex-col gap-3 text-sm text-gray-700">
+            <p>
+              Calle 7 # 8-30 <br />
+              Garzón, Huila, Colombia
             </p>
+            <p>info@miproyecto.co</p>
+            <p className="font-mono">300 000 0000</p>
           </div>
 
-          {/* Columnas de Navegación */}
-          <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8">
-            {/* Columna 1: TIENDA */}
-            <div className="flex flex-col gap-4">
-              <h4 className="text-xs font-bold uppercase tracking-widest text-black">
-                Tienda
-              </h4>
-              <ul className="flex flex-col gap-2.5 text-xs font-medium uppercase tracking-wider text-gray-700">
-                <li><a href="#laptops" className="hover:text-verde transition-colors">Laptops</a></li>
-                <li><a href="#monitores" className="hover:text-verde transition-colors">Monitores</a></li>
-                <li><a href="#audio" className="hover:text-verde transition-colors">Audio</a></li>
-                <li><a href="#componentes" className="hover:text-verde transition-colors">Componentes</a></li>
-                <li><a href="#ofertas" className="hover:text-verde transition-colors">Ofertas</a></li>
+          <div className="grid grid-cols-2 gap-8 text-sm">
+            <div>
+              <h3 className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-4">
+                Menú
+              </h3>
+              <ul className="flex flex-col gap-2.5 text-gray-700">
+                {menu.map((enlace) => (
+                  <li key={enlace.ruta}>
+                    <Link to={enlace.ruta} className="hover:text-ink transition-colors">
+                      {enlace.texto}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
-            {/* Columna 2: EXPLORAR */}
-            <div className="flex flex-col gap-4">
-              <h4 className="text-xs font-bold uppercase tracking-widest text-black">
-                Explorar
-              </h4>
-              <ul className="flex flex-col gap-2.5 text-xs font-medium uppercase tracking-wider text-gray-700">
-                <li><a href="#nosotros" className="hover:text-verde transition-colors">Nosotros</a></li>
-                <li><a href="#resenas" className="hover:text-verde transition-colors">Reseñas</a></li>
-                <li><a href="#blog" className="hover:text-verde transition-colors">Blog</a></li>
-                <li><a href="#novedades" className="hover:text-verde transition-colors">Novedades</a></li>
-              </ul>
-            </div>
-
-            {/* Columna 3: SOPORTE */}
-            <div className="flex flex-col gap-4">
-              <h4 className="text-xs font-bold uppercase tracking-widest text-black">
-                Soporte
-              </h4>
-              <ul className="flex flex-col gap-2.5 text-xs font-medium uppercase tracking-wider text-gray-700">
-                <li><a href="#contacto" className="hover:text-verde transition-colors">Contacto</a></li>
-                <li><a href="#seguimiento" className="hover:text-verde transition-colors">Rastrear Pedido</a></li>
-                <li><a href="#devoluciones" className="hover:text-verde transition-colors">Devoluciones</a></li>
-                <li><a href="#garantia" className="hover:text-verde transition-colors">Garantía</a></li>
+            <div>
+              <h3 className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-4">
+                Redes
+              </h3>
+              <ul className="flex flex-col gap-2.5 text-gray-700">
+                {redes.map((red) => (
+                  <li key={red}>
+                    <a href="#" className="hover:text-ink transition-colors">
+                      {red}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
         </div>
 
-        {/* ── Línea Inferior de Info / Copyright ── */}
-        <div className="flex flex-wrap items-center gap-6 text-xs text-gray-600 pb-6 font-medium">
-          <div className="flex items-center gap-1.5 cursor-pointer hover:text-black">
-            <span>🇨🇴 ES</span>
-            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-          <p>©{year} TechStore Pro. Todos los derechos reservados.</p>
+        {/* LÍNEA CON BOTÓN */}
+        <div className="flex items-center gap-4 mt-16">
+          <div className="h-px flex-1 bg-gray-100"></div>
+          <Link
+            to="/contacto"
+            className="bg-ink text-paper rounded-full px-5 py-2 text-xs font-semibold hover:bg-accent transition-colors"
+          >
+            Escríbenos
+          </Link>
         </div>
-      </div>
 
-      {/* ── Nombre Gigante de la Marca ── */}
-      <div className="w-full overflow-hidden leading-none select-none pointer-events-none">
-        <h1
-          className="font-extrabold text-black tracking-tighter text-center uppercase leading-[0.8] block w-full"
-          style={{ fontSize: "clamp(3rem, 15vw, 15rem)" }}
+        {/* TEXTO LEGAL */}
+        <div className="flex flex-col md:flex-row justify-between gap-4 mt-8 text-xs">
+          <p className="max-w-xs text-gray-500 leading-relaxed">
+            Proyecto formativo SENA ADSO · Ficha 3229944. Tecnología con asesoría real.
+          </p>
+          <p className="font-mono text-gray-500">© 2026 – Fase 5 React & Tailwind</p>
+        </div>
+
+        {/* WORDMARK GIGANTE, RECORTADO ABAJO (Aumentado de tamaño) */}
+        <p
+          aria-hidden="true"
+          className="font-wordmark whitespace-nowrap leading-none text-center select-none text-[clamp(2.5rem,10.5vw,9.5rem)] text-gray-100 mt-12 mb-[-0.18em]"
         >
-          TECHSTORE
-        </h1>
+          TECH<span className="text-accent/20">STORE</span>
+        </p>
       </div>
     </footer>
   );
