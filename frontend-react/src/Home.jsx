@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ProductCard from "./ProductCard.jsx";
+import ProductoModal from "./ProductoModal.jsx";
 
 function Home() {
   const navegar = useNavigate();
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
+  const [seleccionado, setSeleccionado] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:3000/api/productos")
@@ -73,7 +75,8 @@ function Home() {
         </div>
 
         {destacado && (
-          <div className="relative w-full max-w-md lg:w-105 shrink-0 aspect-square bg-gray-50 rounded-[20px] overflow-hidden">
+          <Link to={"/productos/" + destacado._id} className="relative block w-full max-w-md lg:w-105 shrink-0 aspect-square bg-gray-50 rounded-[20px] overflow-hidden"
+          >
             <img
               src={destacado.imagen}
               alt={destacado.nombre}
@@ -86,7 +89,7 @@ function Home() {
                 {destacado.precio}
               </p>
             </div>
-          </div>
+         </Link>
         )}
       </section>
 
@@ -113,11 +116,16 @@ function Home() {
                 descripcion={p.descripcion}
                 precio={p.precio}
                 imagen={p.imagen}
+                onVer={() => setSeleccionado(p)}
               />
             ))}
           </div>
         )}
       </section>
+      {seleccionado && (
+        <ProductoModal producto={seleccionado} onCerrar={() => setSeleccionado(null)}
+        />
+      )}
     </div>
   );
 }
