@@ -8,7 +8,19 @@ const router    = express.Router();
 //2. Post /api/auth/registro - Crear cuenta nueva
 router.post('/registro', async (req, res) => {
     try {
+      // El rol NO se lee del cuerpo: lo que manda el navegador no es de fiar
         const { nombre, email, password, rol, departamento, municipio } = req.body;
+
+        // Validar los datos: el serviidor revisa aunque la pagina ya lo haya hecho
+        if (!nombre || nombre.trim().lenght < 3) {
+          return res.status(400).json({ error: 'El nombre debe tener al menos 3 caracteres'});
+        }
+        if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+          return res.status(400).json({ error: 'El correo no es válido' });
+        }
+        if(!password || password.lenght < 6) {
+          return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres'});
+        }        
 
         // verificar que el email no exista ya
         const existe = await Usuario.findOne({ email });
@@ -18,7 +30,7 @@ router.post('/registro', async (req, res) => {
         const hash = await bcrypt.hash(password, 10);
 
         // Guardar el usuario con la constraseña encriptada
-        const usuario = await Usuario.create({ nombre, email, password: hash, rol, departamento, municipio });
+        const usuario = await Usuario.create({ nombre, email, password: hash, rol, departamento, municipio, rol: 'cliente' });
 
         res.status(201).json({ mensaje: 'Usuario creado correctamente', id: usuario._id });
     } catch (err) {

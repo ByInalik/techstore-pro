@@ -5,7 +5,9 @@ import Home from "./Home.jsx";
 import Productos from "./Productos.jsx";
 import ProductoDetalle from "./ProductoDetalle.jsx";
 import Nosotros from "./Nosotros.jsx";
-import Contacto from "./Contacto.jsx"
+import Contacto from "./Contacto.jsx";
+import Login from "./login";
+import Registro from "./Registro.jsx";
 import NotFound from "./NotFound.jsx";
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
           <Route path="/productos/:id" element={<ProductoDetalle />} />
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Registro />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
