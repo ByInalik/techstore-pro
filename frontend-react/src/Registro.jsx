@@ -14,6 +14,12 @@ const FORM_VACIO = {
   municipio: "",
 };
 
+// Los mismos dominios que acepta el servidor
+const DOMINIOS_PERMITIDOS = [
+    "gmail.com", "hotmail.com", "outlook.com", "yahoo.com",
+    "icloud.com", "me.com", "mac.com", "soy.sena.edu.co"
+];
+
 function porNombre(a, b) {
   return a.name.localeCompare(b.name);
 }
@@ -72,6 +78,11 @@ function Registro() {
     }
     if (!/^\S+@\S+\.\S+$/.test(form.email)) {
       nuevos.email = "Escribe un correo válido, como nombre@correo.com";
+    } else {
+      const dominio = form.email.slice(form.email.lastIndexOf('@') + 1).toLowerCase();
+      if (!DOMINIOS_PERMITIDOS.includes(dominio)) {
+        nuevos.email = "Usa un correo de Gmail, Hotmail, Outlook, Yahoo o iCloud";
+      }
     }
     if (form.password.length < 6) {
       nuevos.password = "La contraseña debe tener al menos 6 caracteres";
