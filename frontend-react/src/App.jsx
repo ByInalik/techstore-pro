@@ -1,15 +1,15 @@
 import { Routes, Route } from 'react-router-dom'
-import Navbar from "./Navbar";
-import Footer from "./Footer.jsx";
-import Home from "./Home.jsx";
-import Productos from "./Productos.jsx";
-import ProductoDetalle from "./ProductoDetalle.jsx";
-import Nosotros from "./Nosotros.jsx";
-import Contacto from "./Contacto.jsx";
-import Login from "./login";
-import Registro from "./Registro.jsx";
-import Carrito from "./Carrito"
-import NotFound from "./NotFound.jsx";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Productos from "./pages/Productos";
+import ProductoDetalle from "./pages/ProductoDetalle";
+import Nosotros from "./pages/Nosotros";
+import Contacto from "./pages/Contacto";
+import Login from "./pages/Login";
+import Registro from "./pages/Registro";
+import Carrito from "./pages/Carrito"
+import NotFound from "./pages/NotFound";
  
 function App() {
   return (
