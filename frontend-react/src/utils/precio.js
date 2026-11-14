@@ -1,0 +1,9 @@
+// El precio llega texto: "$8.999.000". para sumar hay qye volverlo número
+export function precioANumero(precio) {
+    return Number(precio.replace(/[$.]/g, ""));
+}
+
+// Y para mostrarlo, de numero otra vez a texto con puntos: 8999000 -> "$8.999.000"
+export function formatearPrecio(numero) {
+    return "$" + numero.toLocaleString("es-CO");
+}
