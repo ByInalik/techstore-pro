@@ -10,7 +10,7 @@ import Login from "./login";
 import Registro from "./Registro.jsx";
 import Carrito from "./Carrito"
 import NotFound from "./NotFound.jsx";
-
+ 
 function App() {
   return (
     <div className="min-h-screen flex flex-col">
