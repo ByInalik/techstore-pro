@@ -9,6 +9,7 @@ import Contacto from "./pages/Contacto";
 import Login from "./pages/Login";
 import Registro from "./pages/Registro";
 import Carrito from "./pages/Carrito"
+import PagoResultado from './pages/PagoResultado';
 import NotFound from "./pages/NotFound";
  
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/carrito" element={<Carrito />} />
+          <Route path="/pago/:referencia" element={<pagoResultado />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

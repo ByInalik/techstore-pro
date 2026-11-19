@@ -15,6 +15,8 @@ function Carrito() {
   const { usuario } = useContext(AuthContext);
   const navegar = useNavigate();
   const [confirmando, setConfirmando] = useState(false);
+  const [pagando, setPagando] = useState(false);
+  const [error, setError] = useState("");
 
   const unidades = items.reduce((suma, item) => suma + item.cantidad,
     0);
@@ -31,6 +33,46 @@ function Carrito() {
         desde: "/carrito"
       },
     });
+  }
+
+  async function pagar() {
+    setError("");
+    setPagando(true);
+    try {
+      // 1. El servidor calcula el total y devuelve la firma del pago
+      const respuesta = await fetch("http://localhost:3000/api/pagos/firma", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          productos: items.map((item) => ({ id: item.id, cantidad: item.cantidad })),
+        }),
+      });
+      const datos = await respuesta.json();
+
+      if (!respuesta.ok) {
+        setError(datos.error || "No se pudo preparar el pago");
+        setPagando(false);
+        return;
+      }
+
+      // 2. Abrir la ventana de pago de Wompi con esos datos
+      const checkout = new window.WidgetCheckout({
+        currency: datos.currency,
+        amountInCents: datos.amountInCents,
+        reference: datos.reference,
+        publicKey: datos.publicKey,
+        signature: { integrity: datos.signature },
+      });
+
+      // 3. Al cerrar la ventana (pago, fallo o cancelo) ir a ver el resultado
+      checkout.open(() => navegar("/pago/" + datos.reference));
+    } catch {
+      setError("No se pudo conectar con el servidor. Revisa que el backend este encendido");
+      setPagando(false);
+    }
   }
 
   if (items.length === 0) {
@@ -151,11 +193,13 @@ function Carrito() {
               </p>
 
               <button
-                disabled
-                className="bg-ink text-paper py-3 rounded-card text-sm font-semibold opacity-40 cursor-not-allowed"
+                onClick={pagar}
+                disabled={pagando}
+                className="bg-ink text-paper py-3 rounded-card text-sm font-semibold hover:bg-accent transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                Pagar con Wompi (próximamente)
+                {pagando ? "Preparando pago..." : "Pagar con Wompi"}
               </button>
+              {error && <p className="text-sm text-accent-dark">{error}</p> }
             </>
           ) : (
             <button
