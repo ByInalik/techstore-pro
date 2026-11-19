@@ -26,7 +26,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/carrito" element={<Carrito />} />
-          <Route path="/pago/:referencia" element={<pagoResultado />} />
+          <Route path="/pago/:referencia" element={<PagoResultado />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

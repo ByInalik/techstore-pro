@@ -68,8 +68,11 @@ function PagoResultado() {
 
   // Cuando el pago se aprueba, el carrito se vacia
   useEffect(() => {
-    if (estado === "APPROVED") vaciarCarrito();
-  }, [estado, vaciarCarrito]);
+    if (estado === "APPROVED") {
+      vaciarCarrito();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estado]);
 
   const mensaje = MENSAJES[estado] || MENSAJES.ERROR;
 
