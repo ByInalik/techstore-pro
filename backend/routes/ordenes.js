@@ -20,20 +20,6 @@ router.post('/', verificarToken, async (req, res) => {
     }
 });
 
-// GET /api/ordenes - mis ordenes
-// cada usuario ve solo sus propias ordenes
-router.get('/', verificarToken, async (req, res) => {
-    try {
-        const ordenes = await Orden
-        .find({ usuario: req.usuario.id })
-        .populate('usuario', 'nombre email')
-        .populate('productos.producto', 'nombre precio');
-      res.json(ordenes);
-    } catch (err) {
-        res.status(500).json({ error: err.message })
-    }
-});
-
 // GET /api/ordenes/admin/todas — el admin ve TODAS las órdenes de todos los usuarios
 // Declarada antes de "GET /" para no chocar con futuras rutas GET /:id
 router.get('/admin/todas', verificarToken, verificarAdmin, async (req, res) => {
@@ -41,7 +27,7 @@ router.get('/admin/todas', verificarToken, verificarAdmin, async (req, res) => {
       const ordenes = await Orden
         .find({})
         .populate('usuario', 'nombre email')
-        .populate('productos.producto', 'nombre precio')
+        .populate('productos.producto', 'nombre precio imagen')
         .sort({ createdAt: -1 });
       res.json(ordenes);
     } catch (err) {
@@ -69,6 +55,22 @@ router.patch('/:id/estado', verificarToken, verificarAdmin, async (req, res) => 
     res.json(orden);
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+});
+
+// GET /api/ordenes - mis ordenes
+// cada usuario ve solo sus propias ordenes: el servidor sabe quien es por el token
+// (req.usuarios.id), no por un dato que mande el navegador.
+// Las mas nuevas primero, y con el nombre, el precio y la imagen de cada producto.
+router.get('/', verificarToken, async (req, res) => {
+  try {
+    const ordenes = await Orden
+      .find({ usuario: req.usuario.id })
+      .populate('productos.producto', 'nombre precio imagen')
+      .sort({ createdAt: -1 });
+    res.json(ordenes);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 

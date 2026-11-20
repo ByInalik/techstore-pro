@@ -44,14 +44,25 @@ function Navbar() {
         </ul>
 
         <div className="flex items-center gap-4">
-          <Link to="/carrito" onClick={cerrar} className="font-mono text-xs md:text-[13px] text-gray-700 whitespace-nowrap hover:text-ink transition-color"
+          <Link
+            to="/carrito"
+            onClick={cerrar}
+            className="font-mono text-xs md:text-[13px] text-gray-700 whitespace-nowrap hover:text-ink transition-colors"
           >
             Carrito ( {unidades} )
           </Link>
 
           {usuario ? (
             <div className="hidden md:flex items-center gap-4">
+              <Link
+                to="/mis-pedidos"
+                className="text-sm font-medium text-gray-700 hover:text-ink transition-colors"
+              >
+                Mis pedidos
+              </Link>
+
               <span className="text-sm font-semibold">Hola, {usuario}</span>
+
               <button
                 onClick={logout}
                 className="text-sm text-gray-700 underline hover:text-ink transition-colors"
@@ -135,18 +146,26 @@ function Navbar() {
               }
             >
               {usuario ? (
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold">Hola, {usuario}</span>
-
-                  <button
-                    onClick={() => {
-                      logout();
-                      cerrar();
-                    }}
-                    className="bg-ink text-paper px-6 py-3 rounded-card text-sm font-semibold"
+                <div className="flex flex-col gap-5">
+                  <Link
+                    to="/mis-pedidos"
+                    onClick={cerrar}
+                    className="font-display font-semibold text-3xl tracking-tight text-gray-500"
                   >
-                    Salir
-                  </button>
+                    Mis pedidos
+                  </Link>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold">Hola, {usuario}</span>
+                    <button
+                      onClick={() => {
+                        logout();
+                        cerrar();
+                      }}
+                      className="bg-ink text-paper px-6 py-3 rounded-card text-sm font-semibold"
+                    >
+                      Salir
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <Link

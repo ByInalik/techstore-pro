@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Registro from "./pages/Registro";
 import Carrito from "./pages/Carrito"
 import PagoResultado from './pages/PagoResultado';
+import MisPedidos from './pages/MisPedidos';
 import NotFound from "./pages/NotFound";
  
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/carrito" element={<Carrito />} />
           <Route path="/pago/:referencia" element={<PagoResultado />} />
+          <Route path="/mis-pedidos" element={<MisPedidos />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
